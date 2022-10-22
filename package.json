@@ -21,5 +21,8 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "express-react-views": "^0.11.0"
+  },
+  "nodemonConfig": {
+    "ext": "js,html,json,jsx,mjs"
   }
 }
