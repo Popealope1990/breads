@@ -15,11 +15,11 @@ function Show ({bread, index}) {
                 ? <span> does </span>
                 : <span> does NOT </span>
             }
-            has gluten.
+            have gluten.
           </p>
           <img src={bread.image} alt={bread.name} />
           <li><a href="/breads">Go home</a></li>
-
+          <a HREF={`/breads/${index}/edit`}><button>EDIT</button></a>
           <form action={`/breads/${index}?_method=DELETE`} method="POST">
             <input type='submit' value="DELETE"/>
           </form>
