@@ -13,32 +13,32 @@ breads.get(`/`, (req, res) => {
     })
 })
 
-//NEW: getting the info
+//NEW
 breads.get(`/new`,(req,res) => {
     res.render(`new`)
 })
 
-//CREATE: posting the got info
+//CREATE
 breads.post(`/`,(req,res) => {
     console.log(req.body)
     if (!req.body.image) {
-        req.body.image = 'undefined'
+        req.body.image = undefined
       }
     if(req.body.hasGluten === 'on') {
-        req.body.hasGluten = 'true'
+        req.body.hasGluten = true
     } else {
-        req.body.hasGluten = 'false'
+        req.body.hasGluten = false
     }
     Bread.create(req.body)
     res.redirect('/breads')
 })
 
-//UPDATE - with info from EDIT
+//UPDATE
 breads.put(`/:arrayIndex`,(req,res) => {
     if(req.body.hasGluten === 'on') {
-        req.body.hasGluten = 'true'
+        req.body.hasGluten = true
     } else {
-        req.body.hasGluten = 'false'
+        req.body.hasGluten = false
     }
     Bread[req.params.arrayIndex] = req.body
     res.redirect(`/breads/${req.params.arrayIndex}`)
