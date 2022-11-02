@@ -2,7 +2,6 @@ const React = require(`react`)
 const Default = require(`./layouts/default`)
 
 function Show({bread,index}) {
-    console.log(bread.name)
     return (
         <Default>
             <h2>Show Page</h2>
@@ -17,7 +16,7 @@ function Show({bread,index}) {
                 have gluten.
             </p>
             <img src={bread.image} alt={bread.name}/>
-            <p>Baked by {bread.baker}</p>
+            <p>{bread.getBakedBy()}</p>
             <a href="/breads"><button>To Home</button></a>
             <a href={`/breads/${bread.id}/edit`}><button>Edit</button></a>
             <form action={`/breads/${bread.id}?_method=DELETE`} method="POST" >

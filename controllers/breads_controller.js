@@ -43,7 +43,6 @@ breads.put('/:id', (req, res) => {
     }
     Bread.findByIdAndUpdate(req.params.id, req.body, { new: true }) 
       .then(updatedBread => {
-        console.log(updatedBread) 
         res.redirect(`/breads/${req.params.id}`) 
       })
   })
@@ -60,13 +59,14 @@ breads.get('/:id/edit',(req, res) => {
 })
 
 //SHOW
-breads.get(`/:id`, (req, res) => {
+breads.get('/:id', (req, res) => {
     Bread.findById(req.params.id)
-    .then(foundBread => {
-        res.render('show', {
-            bread: foundBread
+        .then(foundBread => {
+          const bakedBy = foundBread.getBakedBy() 
+          res.render('show', {
+              bread: foundBread
+          })
         })
-    })
     .catch(err=>{
         res.status(404).render('page404')
     })
@@ -81,3 +81,4 @@ breads.delete(`/:id`,(req,res) => {
 })
 
 module.exports = breads
+  
