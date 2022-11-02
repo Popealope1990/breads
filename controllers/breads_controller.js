@@ -1,4 +1,5 @@
 const express = require('express')
+const { findById } = require('../models/bread.js')
 const breads = express.Router()
 const Bread = require(`../models/bread.js`)
 
@@ -34,21 +35,27 @@ breads.post(`/`,(req,res) => {
 })
 
 //UPDATE
-breads.put(`/:arrayIndex`,(req,res) => {
-    if(req.body.hasGluten === 'on') {
-        req.body.hasGluten = true
+breads.put('/:id', (req, res) => {
+    if(req.body.hasGluten === 'on'){
+      req.body.hasGluten = true
     } else {
-        req.body.hasGluten = false
+      req.body.hasGluten = false
     }
-    Bread[req.params.arrayIndex] = req.body
-    res.redirect(`/breads/${req.params.arrayIndex}`)
-})
+    Bread.findByIdAndUpdate(req.params.id, req.body, { new: true }) 
+      .then(updatedBread => {
+        console.log(updatedBread) 
+        res.redirect(`/breads/${req.params.id}`) 
+      })
+  })
+  
 
 //EDIT
-breads.get(`/:id/edit`,(req,res) => {
-    res.render(`edit`,{
-        bread: Bread[req.params.id],
-        index: req.params.id
+breads.get('/:id/edit',(req, res) => {
+    Bread.findById(req.params.id)
+    .then(foundBread => {
+        res.render('edit', {
+            bread: foundBread
+        })
     })
 })
 
@@ -66,9 +73,11 @@ breads.get(`/:id`, (req, res) => {
 })
 
 //DELETE
-breads.delete(`/:indexArray`,(req,res) => {
-    Bread.splice(req.params.indexArray,1)
-    res.status(303).redirect(`/breads`)
+breads.delete(`/:id`,(req,res) => {
+    Bread.findByIdAndDelete(req.params.id)
+    .then(deletedBread => {
+        res.status(303).redirect('/breads')
+    })
 })
 
 module.exports = breads
