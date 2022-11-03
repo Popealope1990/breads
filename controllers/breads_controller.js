@@ -1,7 +1,10 @@
+//Dependencies
 const express = require('express')
 const { findById } = require('../models/bread.js')
 const breads = express.Router()
 const Bread = require(`../models/bread.js`)
+const Baker = require('../models/baker.js')
+
 
 //INDEX
 breads.get(`/`, (req, res) => {
@@ -16,7 +19,12 @@ breads.get(`/`, (req, res) => {
 
 //NEW
 breads.get(`/new`,(req,res) => {
-    res.render(`new`)
+    Baker.find()
+    .then(foundBakers => {
+        res.render('new', {
+            bakers: foundBakers
+        })
+    })
 })
 
 //CREATE
